@@ -8,11 +8,10 @@
     - Ian Joseph Chandra (2023/04/01 - 2023/04/27)
 
 1. Set a **static IP address** for the **server's MAC address** in the router 
-    :::warning
-    :bulb: **Note**: 
+
+     **Notes**
     
     The BubbleRAN installation process **requires internet** to ++download its image++. Suggested to set a **static IP address** for the server's MAC address on the router.
-    
     **Example**:
     1. Router Setting (ex: 192.168.8.45):
         ![](https://i.imgur.com/PQoKDTf.png)
@@ -20,22 +19,21 @@
     2. Server's IP after installation:
         ![](https://i.imgur.com/XupdrpT.png)
 
-    :::
 2. Plug the BubbleRAN flashdisk to the server.
 ![](https://i.imgur.com/nQAsEsc.jpg)
 
-3. Boot the server using the Ubuntu from the BubbleRAN flashdisk.
+1. Boot the server using the Ubuntu from the BubbleRAN flashdisk.
 ![](https://i.imgur.com/xOpF8mi.png)
 
-4. After the Ubuntu is installed, the cloud-init will continue the BUbbleRAN.
-    :::info
+1. After the Ubuntu is installed, the cloud-init will continue the BUbbleRAN.
+   
+    **Notes**
+
     Check the cloud-init.log status in a terminal from ```$HOME``` directory:
     ```bash
     tail -f /var/log/cloud-init.log
     ```
-    :::
-    :::warning
-    :warning: **IMPORTANT!**
+    **IMPORTANT!**
     
     <font color="red">**Do not do anything during the cloud-init installation process!**</font> 
     The installation is finished when the log terminal shows this output:
@@ -50,9 +48,8 @@
     2023-04-14 09:24:27,562 - util.py[WARNING]: Failed to post phone home data to http://[::]:80/phone-home/f8bfdaed-8dc3-85f4-f11c-704d7bc23466/ in 10 tries
     Cloud-init v. 22.3.4-3-ga512eef2-1~bddeb finished at Fri, 14 Apr 2023 09:24:27 +0000. Datasource DataSourceGaiaNet [seed=ds_config_seedfrom,https://gaia.bubbleran.com/][dsmode=net].  Up 2342.09 seconds
     ```
-    :::
-    
-5. Setup BubbleRAN Kubernetes credentials:
+
+2. Setup BubbleRAN Kubernetes credentials:
     1. Create a directory on ```~/snap/br-t9s/current/.kube/```:
         ```bash
         mkdir ~/snap/br-t9s/current/.kube/
@@ -61,8 +58,7 @@
         ```bash
         nano ./config
         ```
-    3. Copy the configuration below to config file:
-        :::spoiler config file content
+    3. Copy the configuration below to **config file**:
         ```json=
         apiVersion: v1
         clusters:
@@ -83,16 +79,15 @@
                 user:
                     client-certificate-data: REDACTED
                     client-key-data: REDACTED
-        :::
+    
 
-        :::warning
-        :warning: **IMPORTANT!**
+        
+    **IMPORTANT!**
         
         Setup the server IP address on line 5
-        Ex: 192.168.8.45
-        :::
+        Ex: 192.168.8.45   
 
-6. Setup the [Command Control (CTL)](https://bubbleran.com/docs/tutorials/getting-started/software#command-control-ctl-setup):
+3. Setup the [Command Control (CTL)](https://bubbleran.com/docs/tutorials/getting-started/software#command-control-ctl-setup):
     1. Check the **snap** package installer status after update:
         ```bash
         sudo snap version
@@ -119,10 +114,9 @@
         ```
         ![](https://i.imgur.com/z1FZylo.png)
         
-        :::warning
-        :bulb: **Info**:
+        **Info**:
         the **cli** above is the alias of BubbleRAN cli (br-t9s.cli).
-        :::
+        
         
 ## <center>BubbleRAN [Example Lab](https://bubbleran.com/docs/tutorials/studio/example-lab/)</center>
 After finishing the BubbleRAN installation, there are several testing module provided by Eurocome for further understanding about its functionality.
@@ -133,8 +127,8 @@ After finishing the BubbleRAN installation, there are several testing module pro
     nano sample.yaml
     ```
     
-2. Copy the content below to sample.yaml file:
-    :::spoiler sample.yaml
+2. Copy the content below to **sample.yaml** file:
+    
     ```json
     apiVersion: core.trirematics.io/v1
     kind: Network
@@ -348,10 +342,9 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ```bash
     cli extract pcap {element} -- "$filter" | wireshark -k -i -
     ```
-    :::warning
-    :bulb: **INFO**
+    **Info:**
     Change the **{element}** with the oai-gnb... (press **TAB** button to get the exact name of the element & series).
-    :::
+    
     ![](https://hackmd.io/_uploads/S1qO2yK43.png)
 
     ![](https://hackmd.io/_uploads/SyhI21YV2.png)
