@@ -350,3 +350,44 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ![](https://hackmd.io/_uploads/SyhI21YV2.png)
 
 8. Start the OAI-GnB **on another terminal**.
+    
+    To start the OAI-GnB, use ```cli cic {element} run -- t-dumper```
+    ![](https://hackmd.io/_uploads/HyNF4llYn.png)
+    To verify the E2E connection, check the AMF and gNB logs using ```extract logs {element}```
+
+9. Generate UE traffic
+    The next step is to generate traffic between the UE and the gNB and observe the results. Pick one of the UEs at random for this part of the lab. There are two classes of tests that can be performed:
+
+    - ```rtt``` : Round Trip Time (RTT) measurements using ping.
+    - ```throughput``` : Throughput measurements using iperf3.
+
+    In all the following commands of this section, ***{terminal} is a placeholder for the name of the network terminal (a generic term for the UEs)***. To run the RTT test, use the following command:
+    ``` cli test rtt {terminal} -- -c 100 -s 64```
+    
+    ![](https://hackmd.io/_uploads/Sk3WfvGY3.png)
+
+10. Extract the gNB configuration
+    You can extract the configuration of the gNB as well as some visuals on your deployment. To extract the configuration, use the following command:
+    ```bash
+    cli extract config {element} /tmp
+    ```
+    ![](https://hackmd.io/_uploads/SkFjDPztn.png)
+
+    To extract the visuals, use the following command:
+    ```bash
+    cli extract graph
+    ```
+    ![](https://hackmd.io/_uploads/ryc2vDGth.png)
+
+11. Uninstall the network
+    To uninstall the network after simulation, use the following command:
+    ```bash
+    cli remove network sample.yaml
+    ```
+    ![](https://hackmd.io/_uploads/Syx0vPMFh.png)
+
+
+
+
+
+
