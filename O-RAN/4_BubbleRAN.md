@@ -367,6 +367,7 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ![](https://hackmd.io/_uploads/Sk3WfvGY3.png)
     
     ***Issue***
+   
     ![](https://hackmd.io/_uploads/S1lWkMFFn.png)
 
     ```bash 
@@ -383,7 +384,7 @@ After finishing the BubbleRAN installation, there are several testing module pro
     
     
 
-10. Extract the gNB configuration
+11. Extract the gNB configuration
     You can extract the configuration of the gNB as well as some visuals on your deployment. To extract the configuration, use the following command:
     ```bash
     cli extract config {element} /tmp
@@ -396,7 +397,7 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ```
     ![](https://hackmd.io/_uploads/ryc2vDGth.png)
 
-11. Uninstall the network
+12. Uninstall the network
     To uninstall the network after simulation, use the following command:
     ```bash
     cli remove network sample.yaml
