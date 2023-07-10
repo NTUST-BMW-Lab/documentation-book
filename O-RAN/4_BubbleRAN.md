@@ -365,6 +365,23 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ``` cli test rtt {terminal} -- -c 100 -s 64```
     
     ![](https://hackmd.io/_uploads/Sk3WfvGY3.png)
+    
+    ***Issue***
+    ![](https://hackmd.io/_uploads/S1lWkMFFn.png)
+
+    ```bash 
+    if you are facing this issues, the problems might be:
+    - Wrong YAML file configuration
+    - Kubernetes failed to configure the pods
+    
+    The solutions for this problems might be:
+    - check if you have the Terminal object installed via cli observe or equivalently kubectl get term -n trirematics. 
+    - Check the list of the pods via kubectl get pods -n trirematics to check whether the UE pod actually exists. 
+    - For some reason, the CLI is unable to get the right name and produces "<no-value>". Also while working with the CLI. 
+    - having the --verbose flag might help sometimes to debug. 
+    ```
+    
+    
 
 10. Extract the gNB configuration
     You can extract the configuration of the gNB as well as some visuals on your deployment. To extract the configuration, use the following command:
@@ -385,6 +402,8 @@ After finishing the BubbleRAN installation, there are several testing module pro
     cli remove network sample.yaml
     ```
     ![](https://hackmd.io/_uploads/Syx0vPMFh.png)
+
+
 
 
 
