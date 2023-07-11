@@ -367,7 +367,6 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ![](https://hackmd.io/_uploads/Sk3WfvGY3.png)
     
     ***Issue***
-   
     ![](https://hackmd.io/_uploads/S1lWkMFFn.png)
 
     ```bash 
@@ -384,7 +383,7 @@ After finishing the BubbleRAN installation, there are several testing module pro
     
     
 
-11. Extract the gNB configuration
+10. Extract the gNB configuration
     You can extract the configuration of the gNB as well as some visuals on your deployment. To extract the configuration, use the following command:
     ```bash
     cli extract config {element} /tmp
@@ -397,7 +396,7 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ```
     ![](https://hackmd.io/_uploads/ryc2vDGth.png)
 
-12. Uninstall the network
+11. Uninstall the network
     To uninstall the network after simulation, use the following command:
     ```bash
     cli remove network sample.yaml
@@ -405,8 +404,156 @@ After finishing the BubbleRAN installation, there are several testing module pro
     ![](https://hackmd.io/_uploads/Syx0vPMFh.png)
 
 
+### II. Open RAN Deployment
+1. Create a open-ran.yaml file on ```$HOME``` directory:
+    ```bash
+    nano open-ran.yaml
+    ```
 
-
+2. Copy the configuration
+    ```json
+    apiVersion: core.trirematics.io/v1
+    kind: Network
+    metadata:
+        name: oai-sim
+        namespace: trirematics
+        annotations:
+            trirematics.io/license: Apache-2.0
+            trirematics.io/provider: Trirematics
+    spec:
+        slices:
+            -   plmn: "00101"
+                dnn: "operator"
+                network-mode: "IPv4"
+                service-type: eMBB
+                differentiator: "0x000000"
+                ipv4-range: "12.1.1.0/24"
+                ipv6-range: "2001:1:2::/64"
+        access:
+            -   name: oai-ran
+                vendor: oai
+                stack: 5g-sa
+                model: oai-ran-model
+                deployment-mode: monolithic-gnb
+                annotations:
+                    extras.trirematics.io/t-tracer: "true"
+                identity:
+                    an-id: 30
+                    tracking-area: 1
+                radio:
+                    device: rf-sim
+                cells:
+                    -   band: n78
+                        arfcn: 632628
+                        bandwidth: 40MHz
+                        subcarrier-spacing: 30kHz
+                core-networks:
+                    - oai-cn.oai-sim
+        core:
+            -   name: oai-cn
+                vendor: oai
+                stack: 5g-sa
+                model: oai-cn-model
+                deployment-mode: minimal
+                annotations:
+                    extras.trirematics.io/mtu: "1500"
+                identity:
+                    region: 128
+                    cn-group: 4
+                    cn-id: 5
+        dns:
+            ipv4:
+                default: 172.21.3.100
+                secondary: 8.8.8.8
+    ---
+    apiVersion: core.trirematics.io/v1
+    kind: Terminal
+    metadata:
+        name: ue1
+        namespace: trirematics
+    spec:
+        name: rf-sim
+        vendor: oai
+        stack: 5g-sa
+        model: terminal-model
+        deployment-mode: rf-simulator
+        preferred-access: oai-ran.oai-sim
+        annotations:
+            extras.trirematics.io/sst: eMBB
+            extras.trirematics.io/sd: "0x000000"
+            extras.trirematics.io/nrb: "106"
+            extras.trirematics.io/scs: "30kHz"
+        target-cores:
+            - oai-cn.oai-sim
+        identity:
+            imsi: "001010000000001"
+            pin: "1234"
+            opc: "0xc42449363bbad02b66d16bc975d77cc1"
+            key: "0xfec86ba6eb707ed08905757b1bb44b8f"
+            sqn: "0xff9bb4000001"
+            dnn: "operator"
+            network-mode: "IPv4"
+        radio:
+            4g-bands: [ ]
+            5g-bands: [ 78 ]
+            nsa-bands: [ ]
+        readiness-check:
+            method: ping
+            target: google-ip
+            interface-name: oaitun_ue1
+    ---
+    apiVersion: core.trirematics.io/v1
+    kind: Terminal
+    metadata:
+        name: ue2
+        namespace: trirematics
+    spec:
+        name: rf-sim
+        vendor: oai
+        stack: 5g-sa
+        model: terminal-model
+        deployment-mode: rf-simulator
+        preferred-access: oai-ran.oai-sim
+        annotations:
+            extras.trirematics.io/sst: eMBB
+            extras.trirematics.io/sd: "0x000000"
+            extras.trirematics.io/nrb: "106"
+            extras.trirematics.io/scs: "30kHz"
+        target-cores:
+            - oai-cn.oai-sim
+        identity:
+            imsi: "001010000000002"
+            pin: "1234"
+            opc: "0xc42449363bbad02b66d16bc975d77cc1"
+            key: "0xfec86ba6eb707ed08905757b1bb44b8f"
+            sqn: "0xff9bb4000001"
+            dnn: "operator"
+            network-mode: "IPv4"
+        radio:
+            4g-bands: [ ]
+            5g-bands: [ 78 ]
+            nsa-bands: [ ]
+        readiness-check:
+            method: ping
+            target: google-ip
+            interface-name: oaitun_ue1
+                method: ping
+                target: google-ip
+                interface-name: oaitun_ue1
+    ```
+    ❗Caution❗
+    - Pay attention to use a different name for the second gNB.
+    - You need to use the model that has E2 enabled for connecting to FlexRIC.
+    - The new UE (Terminal object) needs to be connected to the new gNB, hence modify the preferred-access field accordingly.
+    - Use different IMSI for the new UE but keep the same of the identity information for the rest.
+    - Use different names for UEs (for example ue3). 
+    - Use different AN-IDs for the new gNB (for example 20).
+    
+3. Deploy the network
+    Use ```cli install network open-ran.yaml``` to deploy the network
+    
+4. Observe the status of each element
+    Use ```cli observe``` to check the status of each element
 
 
 
