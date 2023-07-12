@@ -13,3 +13,9 @@ Service Based Architecture (SBA) introduces the roles of *service producer* and 
 - **OAM Functions.** The OAM functions are responsible for FCAPS management of O-RAN managed entities.
 - **Infrastructure Management Services (IMS).** The IMS generally provides services for consumption by the FOCOM. It is responsible for management of the O-Cloud resources.
 - **Deployment Management Services (DMS).** The DMS generally provides services for consumption by the NFO. It is responsible for management of network function (NF) deployments into the O-Cloud. (Each O-Cloud can consists of multiple DMS)
+
+# References
+- [O-RAN.WG6.O2-GA&P-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2IMS-INTERFACE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-K8S-PROFILE-R003-v03.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-ETSI-NFV-PROFILE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
