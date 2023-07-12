@@ -55,15 +55,18 @@ The O2ims_InfrastructureInventory services has operations on the following manag
 
 \
 **Query O-Cloud Information Operation**
-```sequence
-SMO->O Cloud: Message: QueryOcloudInfoRequest
-O Cloud->SMO: Message: QueryOcloudInfoResponse
+```mermaid
+sequenceDiagram
+SMO->O Cloud: QueryOcloudInfoRequest
+O Cloud->SMO: QueryOcloudInfoResponse
 ```
+
 **O-Cloud Inventory Event Notifications Operation**
-```sequence
-SMO->O Cloud: Message: SubscribeInfrastructureInventoryRequest
-O Cloud->SMO: Message: SubscribeInfrastructureInventoryResponse
-O Cloud->SMO: Message: InfrastructureInventoryEventNotification
+```mermaid
+sequenceDiagram
+SMO->O Cloud: SubscribeInfrastructureInventoryRequest
+O Cloud->SMO: SubscribeInfrastructureInventoryResponse
+O Cloud->SMO: InfrastructureInventoryEventNotification
 ```
 ### 2.1.2. O2ims_InfrastructureInventory Service API
 The operations defined for O2ims_InfrastructureInventory Services through this API are:
