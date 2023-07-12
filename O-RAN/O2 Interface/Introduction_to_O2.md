@@ -1,4 +1,4 @@
-# Introduction to O2
+# 1. Introduction to O2
 
 ![image alt](https://iili.io/HiXsroG.png)
 
