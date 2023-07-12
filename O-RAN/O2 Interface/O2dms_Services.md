@@ -386,3 +386,9 @@ The figure below shows the resource URI structure defined for the O2dms_Deployme
 | PUT | *not supported* | 
 | PATCH | *not supported* | 
 | DELETE | Terminate a subscription to NF Deployment lifecycle notifications |
+
+# References
+- [O-RAN.WG6.O2-GA&P-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2IMS-INTERFACE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-K8S-PROFILE-R003-v03.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-ETSI-NFV-PROFILE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
