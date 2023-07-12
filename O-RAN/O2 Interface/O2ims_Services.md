@@ -373,3 +373,9 @@ O Cloud->SMO: Message: OCloudAvailableNotification
 
 ### 2.5.2. O2ims_InfrastructureLifecycleManagement Service API
 *For Further Study*
+
+# References
+- [O-RAN.WG6.O2-GA&P-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2IMS-INTERFACE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-K8S-PROFILE-R003-v03.00](https://orandownloadsweb.azurewebsites.net/specifications)
+- [O-RAN.WG6.O2DMS-INTERFACE-ETSI-NFV-PROFILE-R003-v04.00](https://orandownloadsweb.azurewebsites.net/specifications)
