@@ -554,7 +554,41 @@ After finishing the BubbleRAN installation, there are several testing module pro
     
 4. Observe the status of each element
     Use ```cli observe``` to check the status of each element
+    ![](https://hackmd.io/_uploads/B1EmZ9jYh.png)
 
+5. Open Wireshark for each elements+
+    To open wireshark, use ``` cli extract pcap {element} -- "$filter" | wireshark -k -i - ```
+    ❗❗**Warning**❗❗
+    - Do not skip this step
+    
+6. Run dumper for CU, DU, and Monolithic gNB
+    Use ```cli cic {element} run -- t-dumper ```
+    ❗❗**Warning**❗❗
+    - Make sure you run first the CU and then the DU, then the Monolithic gNB.
+
+7. Make sure all elements is ready for workload
+    Use observe command to check the workload status:
+    ![](https://hackmd.io/_uploads/HJqpPsot3.png)
+
+
+8. Check the UE connectivity
+    To make sure all UE work properly, do ``` cli test rtt {terminal} -- -c {amount of ping} -s 64 ```
+    Example:
+    ![](https://hackmd.io/_uploads/HkpEepjY2.png)
+
+    Here is another type of rtt test:
+    ![](https://hackmd.io/_uploads/HyD9lTst2.png)
+
+9. Extract current configuration to local file
+    To save the configuration of an element, use ``` cli extract config {element} /tmp ``` 
+    ![](https://hackmd.io/_uploads/SJYSZToF2.png)
+
+10. Extract the graph of the simulation
+    To get graph of the simulation, use ``` cli extract graph ```.
+    ![](https://hackmd.io/_uploads/B1ghfTiF3.png)
+    
+11. Stop the deployment
+    Use ``` cli remove network open-ran.yaml ``` to stop the deployment of open-ran.yaml.
 
 
 
