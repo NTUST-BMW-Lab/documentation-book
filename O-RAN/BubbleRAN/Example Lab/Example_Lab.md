@@ -549,12 +549,15 @@ After finishing the BubbleRAN installation, there are several testing module pro
     - Use different names for UEs (for example ue3). 
     - Use different AN-IDs for the new gNB (for example 20).
     
-3. Deploy the network
-    Use ```cli install network open-ran.yaml``` to deploy the network
+3. Deploy the environment
+    Use ```cli install network open-ran.yaml``` to deploy the network.
     
 4. Observe the status of each element
     Use ```cli observe``` to check the status of each element
     ![](https://hackmd.io/_uploads/B1EmZ9jYh.png)
+    
+    ⚠️Warning⚠️
+    - Wait for the elements to be ready for workload.
 
 5. Open Wireshark for each elements+
     To open wireshark, use ``` cli extract pcap {element} -- "$filter" | wireshark -k -i - ```
@@ -562,7 +565,8 @@ After finishing the BubbleRAN installation, there are several testing module pro
     - Do not skip this step
     
 6. Run dumper for CU, DU, and Monolithic gNB
-    Use ```cli cic {element} run -- t-dumper ```
+    Use ```cli cic {element} run -- t-dumper ``` to make dummy packet traffic.
+    
     ❗❗**Warning**❗❗
     - Make sure you run first the CU and then the DU, then the Monolithic gNB.
 
@@ -572,12 +576,16 @@ After finishing the BubbleRAN installation, there are several testing module pro
 
 
 8. Check the UE connectivity
-    To make sure all UE work properly, do ``` cli test rtt {terminal} -- -c {amount of ping} -s 64 ```
+    To make sure all UE work properly, do ``` cli test rtt {terminal} -- -c {amount of ping} -s 64 ```. This command will simulate *PING* communication.
     Example:
     ![](https://hackmd.io/_uploads/HkpEepjY2.png)
 
     Here is another type of rtt test:
     ![](https://hackmd.io/_uploads/HyD9lTst2.png)
+    
+    ⚠️Warning⚠️
+    - Check the UE workload status if rtt test failed.
+    - For UE1 and UE2, it might be error because you have not do the Monolithic gNB dumper.
 
 9. Extract current configuration to local file
     To save the configuration of an element, use ``` cli extract config {element} /tmp ``` 
