@@ -1,6 +1,6 @@
 ## 2.1. PNF Startup and Registration Management Services
 ### 2.1.1. PNF Plug-n-Connect (PnC)
-PNF PnC scenario enables a PNF Startup and Registration MnS *Provider* ==to obtain the necessary start up configuration to allow it to register== with PNF Startup and Registration MnS *Consumer* for subsequent management.
+PNF PnC scenario enables a PNF Startup and Registration MnS *Provider* to obtain the necessary start up configuration to allow it to register with PNF Startup and Registration MnS *Consumer* for subsequent management.
 
 Plug-n-Connect is a list of procedure for connecting the Network Element to the management system. The details about concept, procedure, and data format can be found in the following documents:
 - [PnC Concepts and Requirements](https://www.etsi.org/deliver/etsi_ts/128300_128399/128314/17.00.00_60/ts_128314v170000p.pdf)
@@ -8,7 +8,7 @@ Plug-n-Connect is a list of procedure for connecting the Network Element to the 
 - [PnC Data Formats](https://www.etsi.org/deliver/etsi_ts/128300_128399/128316/17.00.00_60/ts_128316v170000p.pdf)
 
 ### 2.1.2. PNF Registration
-PNF Startup and Registration MnS *Provider* sends an asynchronous pnfRegistration or o1NotifyPNFRegistration event to a PNF Startup and Registration MnS *Consumer* after PnC ==to notify the *Consumer* of *Provider* to be managed.==
+PNF Startup and Registration MnS *Provider* sends an asynchronous pnfRegistration or o1NotifyPNFRegistration event to a PNF Startup and Registration MnS *Consumer* after PnC to notify the *Consumer* of *Provider* to be managed.
 
 ```mermaid
 sequenceDiagram
