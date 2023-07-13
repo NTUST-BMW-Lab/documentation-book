@@ -45,7 +45,8 @@ The O-Cloud will provide Deployment Life Cycle Management of O-RAN Cloudified Ne
 
 ### 3.1.1. O2dms_DeploymentLifecycle Services
 **Instantiate Network Function Deployment Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Sub-procedure: Creation of "Individual NF Deployment" resource
 Note right of SMO: Precondition: None
 SMO->O Cloud: 1. <<O2dms>> POST (CreateVnfRequest)
@@ -72,8 +73,9 @@ Note right of SMO: Postcondition: NF Deployment is instantiated and in INSTANTIA
 ```
 
 **Terminate Network Function Deployment Procedure**
-```sequence
-Note right of SMO: Sub-procedire: Termination of NF Deployment
+```mermaid
+sequenceDiagram
+Note right of SMO: Sub-procedure: Termination of NF Deployment
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 SMO->O Cloud: 1. <<O2dms>> POST (TerminateVnfRequest)
 Note left of O Cloud: 2. Create resource
@@ -99,7 +101,8 @@ Note right of SMO: Postcondition: NF Deployment is removed
 ```
 
 **Query Network Function Deployment Information Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: The NF Deployment is created None
 Note left of O Cloud: Query Information about multiple NF Deployment
 SMO->O Cloud: 1. <<O2dms>> GET
@@ -111,7 +114,8 @@ Note right of SMO: Postcondition: SMO has the queried information about NF Deplo
 ```
 
 **On-demand Healing Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 SMO->O Cloud: 1. <<O2dms>> POST
 Note left of O Cloud: 2. Create resource
@@ -130,7 +134,8 @@ Note right of SMO: Postcondition: NF Deployment is healed and in INSTANTIATED st
 ```
 
 **Auto-healing Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 Note left of O Cloud: 1. Detects healing condition
 Note left of O Cloud: 2. Create resource
@@ -148,7 +153,8 @@ Note right of SMO: Postcondition: NF Deployment is automatically healed and in I
 ```
 
 **Scaling NF Deployment based on Management Request Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 SMO->O Cloud: 1. <<O2dms>> POST (ScaleVnfRequest)
 O Cloud->SMO: 2. <<O2dms>> POST (ScaleVnfToLevelRequest)
@@ -168,7 +174,8 @@ Note right of SMO: Postcondition: NF Deployment is scaled and in INSTANTIATED st
 ```
 
 **Auto-scaling Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 Note left of O Cloud: 1. O Cloud DMS detects a scaling condition
 Note left of O Cloud: 2. Create resource
@@ -186,7 +193,8 @@ Note right of SMO: Postcondition: NF Deployment is automatically scaled and in I
 ```
 
 **Change External Connectivity of an NF Deployment Procedure**
-```sequence
+```mermaid
+sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 SMO->O Cloud: 1. <<O2dms>> POST (ChangeExtVnfConnectivityRequest)
 Note left of O Cloud: 2. Create resource
