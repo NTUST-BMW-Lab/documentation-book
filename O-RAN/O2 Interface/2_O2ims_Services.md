@@ -57,16 +57,16 @@ The O2ims_InfrastructureInventory services has operations on the following manag
 **Query O-Cloud Information Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: QueryOcloudInfoRequest
-O Cloud->SMO: QueryOcloudInfoResponse
+SMO->>O Cloud: QueryOcloudInfoRequest
+O Cloud->>SMO: QueryOcloudInfoResponse
 ```
 
 **O-Cloud Inventory Event Notifications Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: SubscribeInfrastructureInventoryRequest
-O Cloud->SMO: SubscribeInfrastructureInventoryResponse
-O Cloud->SMO: InfrastructureInventoryEventNotification
+SMO->>O Cloud: SubscribeInfrastructureInventoryRequest
+O Cloud->>SMO: SubscribeInfrastructureInventoryResponse
+O Cloud->>SMO: InfrastructureInventoryEventNotification
 ```
 ### 2.1.2. O2ims_InfrastructureInventory Service API
 The operations defined for O2ims_InfrastructureInventory Services through this API are:
@@ -241,27 +241,27 @@ The O2ims_InfrastructureMonitoring services has operations on the following mana
 **Query Alarm Information Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: QueryOcloudAlarmRequest
-O Cloud->SMO: QueryOcloudAlarmResponse
+SMO->>O Cloud: QueryOcloudAlarmRequest
+O Cloud->>SMO: QueryOcloudAlarmResponse
 ```
 **Infrastructure Alarm Acknowledge Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: AcknowledgeInfrastructureAlarmRequest
-O Cloud->SMO: AcknowledgeInfrastructureAlarmResponse
+SMO->>O Cloud: AcknowledgeInfrastructureAlarmRequest
+O Cloud->>SMO: AcknowledgeInfrastructureAlarmResponse
 ```
 **Infrastructure Alarm Clear Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: ClearInfrastructureAlarmRequest
-O Cloud->SMO: ClearInfrastructureAlarmResponse
+SMO->>O Cloud: ClearInfrastructureAlarmRequest
+O Cloud->>SMO: ClearInfrastructureAlarmResponse
 ```
 **Infrastructure Alarm Event Notifications Operation**
 ```mermaid
 sequenceDiagram
-SMO->O Cloud: SubscribeInfrastructureAlarmRequest
-O Cloud->SMO: SubscribeInfrastructureAlarmResponse
-O Cloud->SMO: InfrastructureAlarmEventNotification
+SMO->>O Cloud: SubscribeInfrastructureAlarmRequest
+O Cloud->>SMO: SubscribeInfrastructureAlarmResponse
+O Cloud->>SMO: InfrastructureAlarmEventNotification
 ```
 
 ### 2.2.2. O2ims_InfrastructureMonitoring Service API
@@ -373,7 +373,7 @@ The O2ims_InfrastructureLifecycleManagement services has operations on the follo
 **O-Cloud Available Event Notification Operation**
 ```mermaid
 sequenceDiagram
-O Cloud->SMO: OCloudAvailableNotification
+O Cloud->>SMO: OCloudAvailableNotification
 ```
 
 ### 2.5.2. O2ims_InfrastructureLifecycleManagement Service API
