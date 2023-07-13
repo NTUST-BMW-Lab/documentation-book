@@ -49,26 +49,26 @@ The O-Cloud will provide Deployment Life Cycle Management of O-RAN Cloudified Ne
 sequenceDiagram
 Note right of SMO: Sub-procedure: Creation of "Individual NF Deployment" resource
 Note right of SMO: Precondition: None
-SMO->O Cloud: 1. <<O2dms>> POST (CreateVnfRequest)
+SMO->>O Cloud: 1. <<O2dms>> POST (CreateVnfRequest)
 Note left of O Cloud: 2. Check availability
-O Cloud->SMO: 3. <<O2dms>> 201 Created (VnfInstance)
-O Cloud-->SMO: 4. <<O2dms>> Send VnfIdentifierCreationNotification
+O Cloud->>SMO: 3. <<O2dms>> 201 Created (VnfInstance)
+O Cloud-->>SMO: 4. <<O2dms>> Send VnfIdentifierCreationNotification
 Note right of SMO: Postcondition: NF Deployment is created and in NOT_INSTANTIATED state
 Note right of SMO: Sub-procedure: Instantiation of NF Deployment
 Note right of SMO: Precondition: NF Deployment is created and in NOT_INSTANTIATED state
 SMO->O Cloud: 5. <<O2dms>> POST (InstantiateVnfRequest)
 Note left of O Cloud: 6. Create resource
-O Cloud->SMO: 7. <<O2dms>> 202 Accepted ()
-O Cloud-->SMO: 8. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud->>SMO: 7. <<O2dms>> 202 Accepted ()
+O Cloud-->>SMO: 8. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 9. Check resources
-O Cloud-->SMO: 10. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 10. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 11. NF Deployment instantiation
-SMO->O Cloud: 12. <<O2dms>> GET
+SMO->>O Cloud: 12. <<O2dms>> GET
 O Cloud->SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 14. Instantiation completed
-O Cloud-->SMO: 15. <<O2dms>> Send VnfLcmOperationOccuranceNotification(COMPLETED)
-SMO->O Cloud: 16. <<O2dms>> GET
-O Cloud->SMO: 17. <<O2dms>> 200 OK
+O Cloud-->>SMO: 15. <<O2dms>> Send VnfLcmOperationOccuranceNotification(COMPLETED)
+SMO->>O Cloud: 16. <<O2dms>> GET
+O Cloud->>SMO: 17. <<O2dms>> 200 OK
 Note right of SMO: Postcondition: NF Deployment is instantiated and in INSTANTIATED state
 ```
 
@@ -77,26 +77,26 @@ Note right of SMO: Postcondition: NF Deployment is instantiated and in INSTANTIA
 sequenceDiagram
 Note right of SMO: Sub-procedure: Termination of NF Deployment
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
-SMO->O Cloud: 1. <<O2dms>> POST (TerminateVnfRequest)
+SMO->>O Cloud: 1. <<O2dms>> POST (TerminateVnfRequest)
 Note left of O Cloud: 2. Create resource
-O Cloud->SMO: 3. <<O2dms>> 202 Accepted ()
-O Cloud-->SMO: 4. <<O2dms>> Send VnfLcmOperationOccuranceNotification(STARTING)
+O Cloud->>SMO: 3. <<O2dms>> 202 Accepted ()
+O Cloud-->>SMO: 4. <<O2dms>> Send VnfLcmOperationOccuranceNotification(STARTING)
 Note left of O Cloud: 5. Check conditions
-O Cloud-->SMO: 6. <<O2dms>> Send VnfLcmOperationOccuranceNotification(PROCESSING)
+O Cloud-->>SMO: 6. <<O2dms>> Send VnfLcmOperationOccuranceNotification(PROCESSING)
 Note left of O Cloud: 7. NF Deployment termination
-SMO->O Cloud: 8. <<O2dms>> GET
-O Cloud->SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
+SMO->>O Cloud: 8. <<O2dms>> GET
+O Cloud->>SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 10. Termination completed
-O Cloud-->SMO: 11. <<O2dms>> Send VnfLcmOperationOccuranceNotification(COMPLETED)
-SMO->O Cloud: 12. <<O2dms>> GET
-O Cloud->SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 11. <<O2dms>> Send VnfLcmOperationOccuranceNotification(COMPLETED)
+SMO->>O Cloud: 12. <<O2dms>> GET
+O Cloud->>SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note right of SMO: Postcondition: NF Deployment is terminated (NOT_INSTANTIATED state)
 Note right of SMO: Sub-procedure: Deletion of "Individual NF Deployment" resource
 Note right of SMO: Precondition: NF Deployment in NOT_INSTANTIATED state
-SMO->O Cloud: 14. <<O2dms>> DELETE
+SMO->>O Cloud: 14. <<O2dms>> DELETE
 Note left of O Cloud: 15. Delete resource
-O Cloud->SMO: 16. <<O2dms>> 204 No Content
-O Cloud-->SMO: 17. <<O2dms>> Send VnfIdentifierDeletionNotification
+O Cloud->>SMO: 16. <<O2dms>> 204 No Content
+O Cloud-->>SMO: 17. <<O2dms>> Send VnfIdentifierDeletionNotification
 Note right of SMO: Postcondition: NF Deployment is removed
 ```
 
@@ -105,11 +105,11 @@ Note right of SMO: Postcondition: NF Deployment is removed
 sequenceDiagram
 Note right of SMO: Precondition: The NF Deployment is created None
 Note left of O Cloud: Query Information about multiple NF Deployment
-SMO->O Cloud: 1. <<O2dms>> GET
-O Cloud->SMO: 2. <<O2dms>> 200 OK (VnfInstance)
+SMO->>O Cloud: 1. <<O2dms>> GET
+O Cloud->>SMO: 2. <<O2dms>> 200 OK (VnfInstance)
 Note left of O Cloud: Read Information about individual NF Deployment
-SMO->O Cloud: 3. <<O2dms>> GET
-O Cloud->SMO: 4. <<O2dms>> 200 OK (VnfInstance)
+SMO->>O Cloud: 3. <<O2dms>> GET
+O Cloud->>SMO: 4. <<O2dms>> 200 OK (VnfInstance)
 Note right of SMO: Postcondition: SMO has the queried information about NF Deployment
 ```
 
@@ -117,19 +117,19 @@ Note right of SMO: Postcondition: SMO has the queried information about NF Deplo
 ```mermaid
 sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
-SMO->O Cloud: 1. <<O2dms>> POST
+SMO->>O Cloud: 1. <<O2dms>> POST
 Note left of O Cloud: 2. Create resource
-O Cloud->SMO: 3. <<O2dms>> 202 Accepted ()
-O Cloud-->SMO: 4. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud->>SMO: 3. <<O2dms>> 202 Accepted ()
+O Cloud-->>SMO: 4. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 5. Check resources
-O Cloud-->SMO: 6. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 6. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 7. NF Deployment healing
-SMO->O Cloud: 8. <<O2dms>> GET
-O Cloud->SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
+SMO->>O Cloud: 8. <<O2dms>> GET
+O Cloud->>SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 10. Healing completed
-O Cloud-->SMO: 11. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
-SMO->O Cloud: 12. <<O2dms>> GET
-O Cloud->SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 11. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
+SMO->>O Cloud: 12. <<O2dms>> GET
+O Cloud->>SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note right of SMO: Postcondition: NF Deployment is healed and in INSTANTIATED state
 ```
 
@@ -139,16 +139,16 @@ sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 Note left of O Cloud: 1. Detects healing condition
 Note left of O Cloud: 2. Create resource
-O Cloud-->SMO: 3. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud-->>SMO: 3. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 4. Check resources
-O Cloud-->SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 6. NF Deployment auto-healing
-SMO->O Cloud: 7. <<O2dms>> GET
-O Cloud->SMO: 8. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
+SMO->>O Cloud: 7. <<O2dms>> GET
+O Cloud->>SMO: 8. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 9. Auto-healing completed
-O Cloud-->SMO: 10. <<O2dms>> 200 OK VnfLcmOperationOccurenceNotification(COMPLETED)
-SMO->O Cloud: 11. <<O2dms>> GET
-O Cloud->SMO: 12. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 10. <<O2dms>> 200 OK VnfLcmOperationOccurenceNotification(COMPLETED)
+SMO->>O Cloud: 11. <<O2dms>> GET
+O Cloud->>SMO: 12. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note right of SMO: Postcondition: NF Deployment is automatically healed and in INSTANTIATED state
 ```
 
@@ -156,20 +156,20 @@ Note right of SMO: Postcondition: NF Deployment is automatically healed and in I
 ```mermaid
 sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
-SMO->O Cloud: 1. <<O2dms>> POST (ScaleVnfRequest)
-O Cloud->SMO: 2. <<O2dms>> POST (ScaleVnfToLevelRequest)
+SMO->>O Cloud: 1. <<O2dms>> POST (ScaleVnfRequest)
+O Cloud->>SMO: 2. <<O2dms>> POST (ScaleVnfToLevelRequest)
 Note left of O Cloud: 3. Create resource
-O Cloud->SMO: 4. <<O2dms>> 202 Accepted()
-O Cloud-->SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud->>SMO: 4. <<O2dms>> 202 Accepted()
+O Cloud-->>SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 6. Check resources
-O Cloud-->SMO: 7. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 7. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 8. NF Deployment scaling
-SMO->O Cloud: 9. <<O2dms>> GET
-O Cloud->SMO: 10. <<O2dms>> 200 OK (VnfLcmOpOcc:operationnState=PROCESSING)
+SMO->>O Cloud: 9. <<O2dms>> GET
+O Cloud->>SMO: 10. <<O2dms>> 200 OK (VnfLcmOpOcc:operationnState=PROCESSING)
 Note left of O Cloud: 11. Scaling completed
-O Cloud-->SMO: 12. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
-SMO->O Cloud: 13. <<O2dms>> GET
-O Cloud->SMO: 14. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 12. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
+SMO->>O Cloud: 13. <<O2dms>> GET
+O Cloud->>SMO: 14. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note right of SMO: Postcondition: NF Deployment is scaled and in INSTANTIATED state
 ```
 
@@ -179,16 +179,16 @@ sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
 Note left of O Cloud: 1. O Cloud DMS detects a scaling condition
 Note left of O Cloud: 2. Create resource
-O Cloud-->SMO: 3. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud-->>SMO: 3. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 4. Check resources
-O Cloud-->SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 5. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 6. NF Deployment auto-scaling
-SMO->O Cloud: 7. <<O2dms>> GET
-O Cloud->SMO: 8. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
+SMO->>O Cloud: 7. <<O2dms>> GET
+O Cloud->>SMO: 8. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 9. Auto-scaling completed
-O Cloud-->SMO: 10. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
-SMO->O Cloud: 11. <<O2dms>> GET
-O Cloud->SMO: 12. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 10. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
+SMO->>O Cloud: 11. <<O2dms>> GET
+O Cloud->>SMO: 12. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note right of SMO: Postcondition: NF Deployment is automatically scaled and in INSTANTIATED state
 ```
 
@@ -196,19 +196,19 @@ Note right of SMO: Postcondition: NF Deployment is automatically scaled and in I
 ```mermaid
 sequenceDiagram
 Note right of SMO: Precondition: NF Deployment is in INSTANTIATED state
-SMO->O Cloud: 1. <<O2dms>> POST (ChangeExtVnfConnectivityRequest)
+SMO->>O Cloud: 1. <<O2dms>> POST (ChangeExtVnfConnectivityRequest)
 Note left of O Cloud: 2. Create resource
-O Cloud->SMO: 3. <<O2dms>> 202 Accepted ()
-O Cloud-->SMO: 4. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
+O Cloud->>SMO: 3. <<O2dms>> 202 Accepted ()
+O Cloud-->>SMO: 4. <<O2dms>> Send VnfLcmOperationOccurenceNotification(STARTING)
 Note left of O Cloud: 5. Check resources
-O Cloud-->SMO: 6. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
+O Cloud-->>SMO: 6. <<O2dms>> Send VnfLcmOperationOccurenceNotification(PROCESSING)
 Note left of O Cloud: 7. Changing of NF Deployment external connectivity
-SMO->O Cloud: 8. <<O2dms>> GET
-O Cloud->SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
+SMO->>O Cloud: 8. <<O2dms>> GET
+O Cloud->>SMO: 9. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=PROCESSING)
 Note left of O Cloud: 10. Changing external connectivity completed
-O Cloud-->SMO: 11. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
-SMO->O Cloud: 12. <<O2dms>> GET
-O Cloud->SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
+O Cloud-->>SMO: 11. <<O2dms>> Send VnfLcmOperationOccurenceNotification(COMPLETED)
+SMO->>O Cloud: 12. <<O2dms>> GET
+O Cloud->>SMO: 13. <<O2dms>> 200 OK (VnfLcmOpOcc:operationState=COMPLETED)
 Note left of O Cloud: Postcondition: NF Deployment external connectivity has been changed
 ```
 
