@@ -6,8 +6,8 @@ Heartbeat MnS *Provider* sends asynchronous heartbeat notifications to Heartbeat
 ```mermaid
 sequenceDiagram
 Note right of Consumer: Pre-condition
-Consumer->Provider: 1. modifyMOIAttributes('heartbeatNtfPeriod',newHeartbeatPeriodValue)
-Provider->Consumer: 2. notifyHeartbeat notification
+Consumer->>Provider: 1. modifyMOIAttributes('heartbeatNtfPeriod',newHeartbeatPeriodValue)
+Provider->>Consumer: 2. notifyHeartbeat notification
 Note right of Consumer: Post-condition
 ```
 
@@ -27,9 +27,9 @@ Post-condition:
 ```mermaid
 sequenceDiagram
 Note right of Consumer: Pre-condition
-Consumer->Provider: 1. modifyMOIAttributes('triggerHeartbeatNtf',TRUE)
-Provider->Consumer: 2. notifyHeartbeat notification
-Provider->Other Consumers: 3. notifyHeartbeat notification
+Consumer->>Provider: 1. modifyMOIAttributes('triggerHeartbeatNtf',TRUE)
+Provider->>Consumer: 2. notifyHeartbeat notification
+Provider->>Other Consumers: 3. notifyHeartbeat notification
 Note right of Consumer: Post-condition
 ```
 
@@ -48,7 +48,7 @@ Post-condition:
 ```mermaid
 sequenceDiagram
 Note right of Consumer: Pre-condition
-Provider->Consumer: 1. notifyHeartbeat notification
+Provider->>Consumer: 1. notifyHeartbeat notification
 Note right of Consumer: Post-condition
 ```
 

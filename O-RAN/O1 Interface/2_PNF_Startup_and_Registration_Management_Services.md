@@ -13,7 +13,7 @@ PNF Startup and Registration MnS *Provider* sends an asynchronous pnfRegistratio
 ```mermaid
 sequenceDiagram
 Note Right of Consumer: Pre-condition
-Provider->Consumer: 1. <<HTTP/TLS>> pnfRegistration or o1NotifyPNFRegistration event
+Provider->>Consumer: 1. <<HTTP/TLS>> pnfRegistration or o1NotifyPNFRegistration event
 Note Right of Consumer: Post-condition
 ```
 
