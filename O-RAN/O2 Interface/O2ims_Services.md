@@ -239,25 +239,29 @@ The O2ims_InfrastructureMonitoring services has operations on the following mana
 
 \
 **Query Alarm Information Operation**
-```sequence
-SMO->O Cloud: Message: QueryOcloudAlarmRequest
-O Cloud->SMO: Message: QueryOcloudAlarmResponse
+```mermaid
+sequenceDiagram
+SMO->O Cloud: QueryOcloudAlarmRequest
+O Cloud->SMO: QueryOcloudAlarmResponse
 ```
 **Infrastructure Alarm Acknowledge Operation**
-```sequence
-SMO->O Cloud: Message: AcknowledgeInfrastructureAlarmRequest
-O Cloud->SMO: Message: AcknowledgeInfrastructureAlarmResponse
+```mermaid
+sequenceDiagram
+SMO->O Cloud: AcknowledgeInfrastructureAlarmRequest
+O Cloud->SMO: AcknowledgeInfrastructureAlarmResponse
 ```
 **Infrastructure Alarm Clear Operation**
-```sequence
-SMO->O Cloud: Message: ClearInfrastructureAlarmRequest
-O Cloud->SMO: Message: ClearInfrastructureAlarmResponse
+```mermaid
+sequenceDiagram
+SMO->O Cloud: ClearInfrastructureAlarmRequest
+O Cloud->SMO: ClearInfrastructureAlarmResponse
 ```
 **Infrastructure Alarm Event Notifications Operation**
-```sequence
-SMO->O Cloud: Message: SubscribeInfrastructureAlarmRequest
-O Cloud->SMO: Message: SubscribeInfrastructureAlarmResponse
-O Cloud->SMO: Message: InfrastructureAlarmEventNotification
+```mermaid
+sequenceDiagram
+SMO->O Cloud: SubscribeInfrastructureAlarmRequest
+O Cloud->SMO: SubscribeInfrastructureAlarmResponse
+O Cloud->SMO: InfrastructureAlarmEventNotification
 ```
 
 ### 2.2.2. O2ims_InfrastructureMonitoring Service API
@@ -367,8 +371,9 @@ The O2ims_InfrastructureLifecycleManagement services has operations on the follo
 - *Asset* represents an asset purchased or leased by the operator.
 
 **O-Cloud Available Event Notification Operation**
-```sequence
-O Cloud->SMO: Message: OCloudAvailableNotification
+```mermaid
+sequenceDiagram
+O Cloud->SMO: OCloudAvailableNotification
 ```
 
 ### 2.5.2. O2ims_InfrastructureLifecycleManagement Service API
