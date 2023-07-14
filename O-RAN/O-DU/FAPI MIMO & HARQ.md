@@ -1,5 +1,10 @@
 # <center><i class="fa fa-edit"></i> FAPI </center>
 ## Introduction
+- **Important**:
+>**FAPI PHY interface on [O-DU Gerrit Repo](https://gerrit.o-ran-sc.org/r/admin/repos/o-du/l2,general) is based on version 222.10.01/29 June 2019, whereas this documentation refers to the latest 222.10.06/December 2022 version**
+>![](https://hackmd.io/_uploads/HkBmsyptn.png)
+
+
 ![](https://hackmd.io/_uploads/HyHh5e2v3.png)
 ![](https://hackmd.io/_uploads/Sk1Ong3w2.png)
 ![](https://hackmd.io/_uploads/SJF-dH5K2.png)
@@ -465,4 +470,263 @@ Mulyi-slot transmission is the same as DL-SCH which UL-SCH with configured grant
 
 ![](https://hackmd.io/_uploads/H1XqgyhY2.png)
 
-## 2. Transport Channel
+## 2. Param TLV
+### 2.1 UCI Parameters
+:::danger
+This section is based on:
+**5G FAPI: PHY API Specification**
+- **Issue date: December 2022**
+- **Version: 222.10.06**
+:::
+:::success
+FAPI Sec. 3.3.1.4 PARAM TLVs
+:::
+
+FAPI version 222.10.06 supports UCI parameters `PARAM.response` to control parameters relating to UCI reporting.
+![](https://hackmd.io/_uploads/S1-3nypY2.png)
+Bitmap is a presence indicator of optional PDUs. Here, on uci-ReportFormat field is a bitmap indicating which PUCCH format is supported on PHY. Note that this TLV is not supported on the O-DU sourcecode yet as it only supports the 222.10.01 version.
+
+1. UCI Reporting Support:
+The information specifies two bit positions that indicate whether the PHY (Physical Layer) supports or does not support UCI reporting for PUCCH Formats 2, 3, and 4. The bit positions are defined as follows:
+    - Bit #0: Indicates whether the PHY supports separate parameters for UCI reporting related to SR (Scheduling Request), HARQ (Hybrid Automatic Repeat Request), CSI Part 1 (Channel State Information Part 1), and CSI Part 2 (Channel State Information Part 2).
+    - Bit #1: Indicates whether the PHY supports parameters for UCI reporting related to uciPart 1 and uciPart2.
+    - The value of each bit can be either 0 or 1, where 0 denotes support, and 1 denotes no support from the PHY.
+
+2. UCI Report Parameter Selection:
+The information also clarifies which bits of the pduBitmap in Table 3-98 are set based on the UCI report requirements. Here's how the bits are set:
+    - Bit #0: If this bit is set (1), the PHY will only set bits 0-3 in the pduBitmap of Table 3-98. This indicates that the UCI report includes separate parameters for SR, HARQ, CSI Part 1, and CSI Part 2.
+    - Bit #1: If this bit is set (1), the PHY will only set bits 2-3 in the pduBitmap of Table 3-98. This indicates that the UCI report includes parameters for uciPart 1 and uciPart2.
+
+3. Note on Bit Positions:
+The note mentions that in the given release or specification, only one of the two bit positions, 0 or 1, will be set. This indicates that the PHY either supports separate parameters for SR, HARQ, CSI Part 1, and CSI Part 2 (bit #0 set) or parameters for uciPart 1 and uciPart2 (bit #1 set), but not both simultaneously.
+
+## 3. UL_TTI.request
+:::danger
+This section will compare:
+**5G FAPI: PHY API Specification**
+- **Issue date: December 2022**
+- **Version: 222.10.06**
+
+with
+- **Issue date: 29 June 2019**
+- **Version: 222.10.01**
+:::
+Used to indicate how to perform uplink scheduling.
+### 3.1 PUSCH
+>**3.4.3.2 PUSCH PDU**
+
+#### 3.1.1 PUSCH PDU
+
+In PUSCH PDU, pduBitMap is used to indicate the presence of optional PDUs, including puschData and puschUci which will contain information about the HARQ process. ==This parameter is the same in both version 01 and 06==.
+![](https://hackmd.io/_uploads/S1ThjxTF3.png)
+![](https://hackmd.io/_uploads/SJ2YgZ6tn.png)
+
+
+>FAPI 222.10.06 Table 3-105 PUSCH PDU
+:::spoiler Sourcecode
+```cpp=
+// Updated per 5G FAPI
+    typedef struct {
+        uint16_t pduBitMap;
+        uint16_t rnti;
+        uint32_t handle;
+        uint16_t bwpSize;
+        uint16_t bwpStart;
+        uint8_t subCarrierSpacing;
+        uint8_t cyclicPrefix;
+        uint8_t mcsIndex;
+        uint8_t mcsTable;
+        uint16_t targetCodeRate;
+        uint8_t qamModOrder;
+        uint8_t transformPrecoding;
+        uint16_t dataScramblingId;
+        uint8_t nrOfLayers;
+        uint8_t dmrsConfigType;
+        uint16_t ulDmrsSymbPos;
+        uint16_t ulDmrsScramblingId;
+        uint8_t scid;
+        uint8_t numDmrsCdmGrpsNoData;
+        uint16_t dmrsPorts;
+        uint16_t nTpPuschId;
+        uint16_t tpPi2Bpsk;
+        uint8_t rbBitmap[36];
+        uint16_t rbStart;
+        uint16_t rbSize;
+        uint8_t vrbToPrbMapping;
+        uint8_t frequencyHopping;
+        uint16_t txDirectCurrentLocation;
+        uint8_t resourceAlloc;
+        uint8_t uplinkFrequencyShift7p5khz;
+        uint8_t startSymbIndex;
+        uint8_t nrOfSymbols;
+        uint8_t mappingType;
+        uint8_t nrOfDmrsSymbols;
+        uint8_t dmrsAddPos;
+        uint8_t pad;
+
+        fapi_pusch_data_t puschData;
+        fapi_pusch_uci_t puschUci;
+        fapi_pusch_ptrs_t puschPtrs;
+        fapi_dfts_ofdm_t dftsOfdm;
+        fapi_ul_rx_bmform_pdu_t beamforming;    // 5G FAPI Table 3-46
+    } fapi_ul_pusch_pdu_t;
+```
+:::
+
+#### 3.1.2 puschData
+![](https://hackmd.io/_uploads/SyWrzWTF2.png)
+![](https://hackmd.io/_uploads/S1d8GbaY2.png)
+
+>FAPI 222.10.06 Table 3-108 Optional puschData information
+
+Indicates data is expected on the PUSCH
+:::spoiler Sourcecode
+```cpp=
+// Updated per 5G FAPI
+    typedef struct {
+        uint8_t rvIndex;
+        uint8_t harqProcessId;
+        uint8_t newDataIndicator;
+        uint8_t pad;
+        uint32_t tbSize;
+        uint16_t numCb;         // 5G FAPI Table 3-47
+        uint8_t cbPresentAndPosition[2];    // Since the maximum number of Code Blocks per TCB in a CBG is 8 for 1 CW or 4 for 2CW and this is a bit field with pading to align to 32 bits
+    } fapi_pusch_data_t;
+```
+:::
+
+
+#### 3.1.3 puschUci
+![](https://hackmd.io/_uploads/H1VxfWpt3.png)
+![](https://hackmd.io/_uploads/Bk9GfZTYh.png)
+
+>FAPI 222.10.06 Table 3-109  Optional puschUci information
+
+Indicates [UCI](https://hackmd.io/@ra-jordhie/Phylayer-Background#Summary-of-Resource-Controlling) is expected on the PUSCH.
+
+:::spoiler Sourcecode
+```cpp=
+// Updated per 5G FAPI
+    typedef struct {
+        uint16_t harqAckBitLength;
+        uint16_t csiPart1BitLength;
+        uint16_t csiPart2BitLength;
+        uint8_t alphaScaling;
+        uint8_t betaOffsetHarqAck;
+        uint8_t betaOffsetCsi1;
+        uint8_t betaOffsetCsi2; // 5G FAPI Table 3-48
+        uint8_t pad[2];
+    } fapi_pusch_uci_t;
+```
+:::
+
+### 3.2 PUCCH
+>**3.4.3.3 PUCCH PDU**
+
+The PUCH PDU includes information regarding SR, HARQ and CSI and the valid data varies depending on whether it is PUCCH format 0, 1, 2, 3 or 4
+
+#### 3.2.1 PUCCH PDU
+
+In PUSCH PDU, pduBitMap is used to indicate the presence of optional PDUs, including puschData and puschUci which will contain information about the HARQ process. ==This parameter is the same in both version 01 and 06 except that the extension TLVs were only added by the release of FAPIv3 and FAPIv4 thus parameter extension has not supported yet on the O-DU FAPI sourcecode==.
+![](https://hackmd.io/_uploads/SkbRGMat2.png)
+The field indicates the length of the HARQ (Hybrid Automatic Repeat Request) payload in bits. The HARQ payload refers to the information transmitted within the PUCCH for HARQ-related operations, such as acknowledgment (ACK) or negative acknowledgment (NACK) feedback.
+- If the value is 0, it indicates that there are no HARQ bits in the payload.
+- If the value is between 1 and 2, it is valid for PUCCH Formats 0 and 1.
+- If the value is between 2 and 1706, it is valid for PUCCH Formats 2, 3, and 4.
+
+Relationship with PUCCH Format 1:
+- For PUCCH Format 1, the field specifies that the bit length of the HARQ payload should be the same as the bit length of the Scheduling Request (SR) resource if both are present. The SR resource is used for requesting uplink resources from the base station.
+
+>FAPI 222.10.06 Table 3-114 PUCCH PDU
+:::spoiler Sourcecode
+```cpp=
+// Updated per 5G FAPI
+    typedef struct {
+        uint16_t rnti;
+        uint8_t pad1[2];
+        uint32_t handle;
+        uint16_t bwpSize;
+        uint16_t bwpStart;
+        uint8_t subCarrierSpacing;
+        uint8_t cyclicPrefix;
+        uint8_t formatType;
+        uint8_t multiSlotTxIndicator;
+        uint8_t pi2Bpsk;
+        uint8_t pad2;
+        uint16_t prbStart;
+        uint16_t prbSize;
+        uint8_t startSymbolIndex;
+        uint8_t nrOfSymbols;
+        uint8_t freqHopFlag;
+        uint8_t groupHopFlag;
+        uint8_t sequenceHopFlag;
+        uint8_t pad3;
+        uint16_t secondHopPrb;
+        uint16_t hoppingId;
+        uint16_t initialCyclicShift;
+        uint16_t dataScramblingId;
+        uint8_t timeDomainOccIdx;
+        uint8_t preDftOccIdx;
+        uint8_t preDftOccLen;
+        uint8_t addDmrsFlag;
+        uint16_t dmrsScramblingId;
+        uint8_t dmrsCyclicShift;
+        uint8_t srFlag;
+        uint16_t bitLenHarq;
+        uint8_t pad4[2];
+        uint16_t bitLenCsiPart1;
+        uint16_t bitLenCsiPart2;
+        fapi_ul_rx_bmform_pdu_t beamforming;    // 5G FAPI Table 3-51
+    } fapi_ul_pucch_pdu_t;
+```
+:::
+
+#### 3.2.2 PUCCH PDU extension for FAPIv4
+This extension is only available on FAPIv4 / version 222.10.06.
+![](https://hackmd.io/_uploads/HydjHzTKh.png)
+>FAPI 222.10.06  PUCCH basic extension for FAPIv4 
+
+Used to indicate whether joint reporting or separate reporting of different types of UCI (Uplink Control Information) payload is required in a 5G system.
+
+- **Flag for Joint Reporting or Separate Reporting**: The uci-ReportFormat-v4 field serves as a flag to determine the reporting format for UCI payloads. It indicates whether the PHY (Physical Layer) should perform joint reporting, where different types of UCI payloads are reported together, or separate reporting, where each type of UCI payload is reported individually.
+- The field can have two possible values:
+    - 0: Indicates separate reporting. In this case, the PHY reports HARQ (Hybrid Automatic Repeat Request), SR (Scheduling Request), CSIp1 (Channel State Information Part 1), and CSIp2 (Channel State Information Part 2) in separate parameters. Each type of UCI payload is reported individually.
+    - 1: Indicates combined reporting. In this case, the PHY reports the uciPayload(s) without attempting to interpret its mapping to specific UCI types such as HARQ, SR, CSIp1, or CSIp2 bits. The PHY reports the UCI payload(s) as a whole, without separating them into individual types.
+- **PHY Support Signaling**: The support for this flag by the PHY is signaled in the uciReportFormatPucchForamt234 TLV (Type-Length-Value) of the PARAM.response message. This TLV provides information about the supported UCI reporting formats for PUCCH (Physical Uplink Control Channel) Formats 2, 3, and 4.
+
+### 3.3 RX_DATA.indication
+`RX_DATA.indication` contains `HarqID` of the transmission and is ==different on version 01 and version 06==. Below is the latest implementation of `RX_DATA.indication`:
+![](https://hackmd.io/_uploads/B1BzRGTt2.png)
+![](https://hackmd.io/_uploads/rJoNAf6th.png)
+
+Here is the implementation of `RX_DATA.indication` on version 222.10.01:
+![](https://hackmd.io/_uploads/BkFt0fpF2.png)
+:::spoiler Sourcecode
+```cpp=
+// Updated per 5G FAPI
+    typedef struct {
+        uint32_t handle;
+        uint16_t rnti;
+        uint8_t harqId;
+        uint8_t ul_cqi;
+        uint16_t timingAdvance;
+        uint16_t rssi;
+        uint16_t pdu_length;
+        uint8_t pad[2];
+        void *pduData;          // 5G FAPI Table 3-61 Subset
+    } fapi_pdu_ind_info_t;
+
+    // Updated per 5G FAPI
+    typedef struct {
+        fapi_msg_t header;
+        uint16_t sfn;
+        uint16_t slot;
+        uint16_t numPdus;
+        uint8_t pad[2];
+        fapi_pdu_ind_info_t pdus[FAPI_MAX_NUMBER_OF_ULSCH_PDUS_PER_SLOT];   // 5G FAPI Table 3-61
+    } fapi_rx_data_indication_t;
+
+```
+:::
+
+As shown on the table, the sourcecode hasn't implemented 
